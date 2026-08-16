@@ -1,0 +1,55 @@
+research_task:
+  description: >
+    Research the following business idea using web search:
+
+    "{business_idea}"
+
+    Investigate: the target market and customer segments, existing
+    competitors or alternatives, relevant industry/technology trends, and
+    the main risks or open questions. Cite what you actually found rather
+    than assuming.
+  expected_output: >
+    A concise research brief (400-600 words) covering: target market,
+    competitors, trends, and key risks/open questions.
+  agent: business_researcher
+
+epic_definition_task:
+  description: >
+    Using the original business idea and the research brief above, write a
+    one-paragraph problem statement, then define the set of Epics needed to
+    deliver this business idea as a software product. Each Epic must have a
+    clear name, a description, and the business value/goal it serves. Keep
+    Epics scoped so they don't overlap and together they cover the full
+    idea end to end. Aim for 3-6 Epics for a typical idea.
+  expected_output: >
+    A problem statement followed by a numbered list of Epics, each with a
+    name, description, and business value.
+  agent: business_analyst
+  context:
+    - research_task
+
+backlog_breakdown_task:
+  description: >
+    Using the Epics defined above, act as the certified Scrum Master and
+    Jira expert. For every Epic, write the User Stories needed to fully
+    deliver it, and for every Story, write the concrete engineering Tasks
+    needed to implement it.
+
+    For each Story:
+    - Write it in "As a <role>, I want <goal>, so that <benefit>" form.
+    - Give 3-5 specific, testable acceptance criteria.
+    - Estimate story points on the Fibonacci scale (1, 2, 3, 5, 8, 13).
+    - Set a priority of Highest, High, Medium, or Low.
+
+    For each Task:
+    - Give a short, action-oriented summary and a description of what needs
+      to be built.
+
+    Return the full result as the structured Backlog object — do not
+    summarize or omit any Epic.
+  expected_output: >
+    A Backlog containing every Epic, each with its Stories, each Story with
+    its acceptance criteria, story points, priority, and Tasks.
+  agent: tech_scrum_jira_expert
+  context:
+    - epic_definition_task
